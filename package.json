@@ -1,0 +1,7 @@
+{
+  "name": "celestial-sound",
+  "private": true,
+  "version": "0.2.0",
+  "description": "AURA — vinyl-styled, YouTube-powered music player with live search",
+  "type": "module"
+}
