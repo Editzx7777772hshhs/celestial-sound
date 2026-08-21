@@ -1,8 +1,10 @@
 {
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
+  "functions": {
+    "api/youtube-search.js": {
+      "maxDuration": 10
+    },
+    "api/lyrics.js": {
+      "maxDuration": 10
     }
-  ]
+  }
 }

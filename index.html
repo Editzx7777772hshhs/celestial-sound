@@ -4,6 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#0B0710" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="AURA" />
+<link rel="manifest" href="/manifest.json" />
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+<link rel="icon" href="/icons/icon-192.png" />
 <title>AURA — Spin Something</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -369,6 +376,112 @@
   }
   .catalog-note svg{ width:14px;height:14px; flex-shrink:0; }
 
+  /* ===== Daily Hits (trending strip) ===== */
+  .hits-strip{
+    display:flex; flex-direction:column; border-radius:16px; border:1px solid var(--border);
+    background:linear-gradient(135deg, rgba(212,175,55,0.06), transparent 60%), var(--surface);
+    margin-bottom:34px; overflow:hidden;
+  }
+  .hits-row{
+    display:flex; align-items:center; gap:16px; padding:12px 18px; cursor:pointer;
+    border-bottom:1px solid var(--border); transition:background .12s;
+  }
+  .hits-row:last-child{ border-bottom:none; }
+  .hits-row:hover{ background:var(--surface-hi); }
+  .hits-rank{
+    font-family:'Fraunces',serif; font-weight:700; font-size:22px; width:30px; flex-shrink:0;
+    color:var(--text-dimmer); text-align:center;
+  }
+  .hits-row:nth-child(1) .hits-rank{ color:var(--gold); }
+  .hits-row:nth-child(2) .hits-rank{ color:#c9c9c9; }
+  .hits-row:nth-child(3) .hits-rank{ color:#b08d57; }
+  .hits-art{ width:46px;height:46px; border-radius:9px; overflow:hidden; flex-shrink:0; background:#1a1420; position:relative; }
+  .hits-art img{ width:100%;height:100%;object-fit:cover; }
+  .hits-meta{ flex:1; min-width:0; }
+  .hits-meta .t-title{ font-size:14px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .hits-meta .t-artist{ font-size:12px; color:var(--text-dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .hits-fire{ font-size:13px; flex-shrink:0; color:var(--text-dimmer); display:flex; align-items:center; gap:4px; }
+  .hits-play{
+    width:32px;height:32px; border-radius:50%; background:var(--surface-hi); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .12s;
+  }
+  .hits-row:hover .hits-play{ opacity:1; }
+  .hits-play svg{ width:13px;height:13px; margin-left:1px; }
+
+  /* ===== Liked page hero ===== */
+  .liked-hero{
+    display:flex; align-items:center; gap:24px; padding:30px 32px; border-radius:20px; margin-bottom:28px;
+    background:linear-gradient(135deg, rgba(200,30,58,0.18), rgba(212,175,55,0.06) 65%, transparent), var(--surface);
+    border:1px solid var(--border);
+  }
+  .liked-cover{
+    width:104px; height:104px; border-radius:16px; flex-shrink:0; overflow:hidden;
+    display:grid; grid-template-columns:1fr 1fr; box-shadow:0 14px 34px rgba(0,0,0,.45);
+    background:#1a1420;
+  }
+  .liked-cover img{ width:100%;height:100%;object-fit:cover; }
+  .liked-cover.single{ grid-template-columns:1fr; }
+  .liked-info .eyebrow{ margin-bottom:6px; }
+  .liked-info h1{ font-family:'Fraunces',serif; font-size:28px; font-weight:700; margin-bottom:6px; }
+  .liked-info p{ color:var(--text-dim); font-size:13.5px; margin-bottom:16px; }
+  .liked-actions{ display:flex; gap:10px; }
+  .liked-actions .btn-primary, .liked-actions .btn-ghost{ padding:10px 20px; font-size:13px; }
+
+  /* ===== Now Playing (full-screen expanded player) ===== */
+  .np-overlay{
+    position:fixed; inset:0; z-index:200;
+    display:flex; flex-direction:column; transform:translateY(100%); transition:transform .38s cubic-bezier(.32,.72,0,1);
+    pointer-events:none;
+    background:
+      radial-gradient(900px 600px at 20% 0%, rgba(200,30,58,0.16), transparent 60%),
+      radial-gradient(700px 500px at 100% 100%, rgba(212,175,55,0.08), transparent 55%),
+      var(--bg);
+  }
+  .np-overlay.open{ transform:translateY(0); pointer-events:auto; }
+  .np-head{ display:flex; align-items:center; justify-content:space-between; padding:18px 20px 6px; flex-shrink:0; position:relative; }
+  .np-head button{ width:38px;height:38px; display:flex; align-items:center; justify-content:center; color:var(--text-dim); }
+  .np-head button:hover{ color:var(--text); }
+  .np-head button svg{ width:20px;height:20px; }
+  .np-head .np-caret{ width:36px; height:4px; border-radius:99px; background:rgba(255,255,255,.18); position:absolute; left:50%; top:8px; transform:translateX(-50%); }
+  .np-eyebrow{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-dimmer); }
+  .np-tabs{ display:flex; gap:6px; }
+  .np-tab{ font-size:12px; font-weight:600; color:var(--text-dimmer); padding:8px 14px; border-radius:999px; }
+  .np-tab.active{ background:var(--surface-hi); color:var(--text); }
+
+  .np-body{ flex:1; min-height:0; display:flex; flex-direction:column; align-items:center; padding:8px 28px 20px; overflow-y:auto; }
+  .np-art-wrap{ width:min(72vw,300px); aspect-ratio:1/1; flex-shrink:0; margin:10px 0 26px; position:relative; }
+  .np-art-wrap img{ width:100%;height:100%; object-fit:cover; border-radius:16px; box-shadow:0 30px 60px rgba(0,0,0,.55); }
+  .np-meta{ text-align:center; width:100%; max-width:420px; margin-bottom:22px; }
+  .np-meta h2{ font-family:'Fraunces',serif; font-size:23px; font-weight:700; margin-bottom:6px; line-height:1.2; }
+  .np-meta span{ color:var(--text-dim); font-size:14px; }
+  .np-progress{ width:100%; max-width:420px; display:flex; align-items:center; gap:10px; margin-bottom:20px; }
+  .np-controls{ display:flex; align-items:center; gap:30px; margin-bottom:8px; }
+  .np-controls button{ display:flex; align-items:center; justify-content:center; color:var(--text-dim); }
+  .np-controls button:hover{ color:var(--text); }
+  .np-controls svg{ width:22px;height:22px; }
+  .np-play{ width:62px;height:62px; border-radius:50%; background:var(--text); color:var(--bg) !important;
+    display:flex; align-items:center; justify-content:center; box-shadow:0 10px 26px rgba(0,0,0,.4); }
+  .np-play svg{ width:24px;height:24px; }
+  .np-play:hover{ transform:scale(1.04); }
+  .np-secondary{ display:flex; align-items:center; gap:26px; margin-top:6px; }
+  .np-secondary button svg{ width:17px;height:17px; color:var(--text-dimmer); }
+  .np-secondary button:hover svg{ color:var(--text); }
+  .np-secondary button.active-toggle svg{ color:var(--red-hi); }
+  .np-like.liked svg{ color:var(--red-hi); fill:var(--red-hi); }
+
+  .np-lyrics{ display:none; width:100%; max-width:520px; margin-top:6px; }
+  .np-lyrics.show{ display:block; }
+  .np-lyrics-body{
+    white-space:pre-line; font-family:'Fraunces',serif; font-size:17px; line-height:1.85; color:var(--text);
+    text-align:center; padding-bottom:40px;
+  }
+  .np-lyrics-status{ display:flex; flex-direction:column; align-items:center; gap:10px; color:var(--text-dim); padding:50px 10px; text-align:center; font-size:13.5px; }
+  .np-lyrics-status svg{ width:26px;height:26px; color:var(--text-dimmer); }
+  .np-hide-when-lyrics.hide{ display:none; }
+  .np-lyrics-credit{ text-align:center; font-size:10.5px; color:var(--text-dimmer); margin-top:6px; }
+
+  .pb-track{ cursor:pointer; }
+
   /* Mobile */
   .mobile-nav{ display:none; }
   @media (max-width: 860px){
@@ -379,17 +492,21 @@
     .hero-actions{ justify-content:center; }
     .vinyl-stage{ width:150px;height:150px; }
     #app{ padding-bottom:170px; }
-    .player-bar{ height:150px; flex-wrap:wrap; padding:10px 14px; gap:8px; }
+    .player-bar{ height:70px; padding:0 12px; gap:10px; bottom:64px; }
     .pb-track{ width:auto; flex:1; }
-    .pb-center{ order:3; width:100%; max-width:none; }
-    .pb-right{ width:auto; }
+    .pb-center{ display:none; }
+    .pb-right{ display:none; }
+    .liked-hero{ flex-direction:column; text-align:center; padding:26px 20px; }
     .row-tag{ display:none; }
+    .np-controls{ gap:38px; }
     .mobile-nav{
       display:flex; position:fixed; bottom:0; left:0; right:0; z-index:55;
-      background:rgba(15,10,20,.95); border-top:1px solid var(--border);
-      justify-content:space-around; padding:8px 0 calc(8px + env(safe-area-inset-bottom));
-      transform: translateY(150px);
+      background:rgba(15,10,20,.96); backdrop-filter:blur(16px); border-top:1px solid var(--border);
+      justify-content:space-around; padding:8px 0 calc(6px + env(safe-area-inset-bottom));
     }
+    .mnav-item{ display:flex; flex-direction:column; align-items:center; gap:3px; color:var(--text-dimmer); font-size:9.5px; font-weight:600; padding:4px 10px; }
+    .mnav-item svg{ width:20px;height:20px; }
+    .mnav-item.active{ color:var(--red-hi); }
   }
 </style>
 </head>
@@ -473,6 +590,9 @@
         Curated global catalog, playable instantly. Type in Search to filter by title, artist, or language.
       </div>
 
+      <div class="section-head"><h2>🔥 Daily Hits</h2><span class="see-all" id="daily-refresh-hint">Refreshes every day</span></div>
+      <div class="hits-strip" id="hits-strip"></div>
+
       <div class="section-head"><h2>Global Chart Toppers</h2><span class="see-all" data-page-link="search">See all</span></div>
       <div class="track-grid" id="grid-chart"></div>
 
@@ -493,7 +613,24 @@
 
     <!-- LIKED PAGE -->
     <section class="page" id="page-liked">
-      <div class="section-head"><h2>Liked Songs</h2></div>
+      <div class="liked-hero" id="liked-hero">
+        <div class="liked-cover" id="liked-cover"></div>
+        <div class="liked-info">
+          <div class="eyebrow">Playlist</div>
+          <h1>Liked Songs</h1>
+          <p id="liked-count">0 tracks</p>
+          <div class="liked-actions">
+            <button class="btn-primary" id="liked-play-all">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M8 5v14l11-7z"/></svg>
+              Play all
+            </button>
+            <button class="btn-ghost" id="liked-shuffle">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg>
+              Shuffle
+            </button>
+          </div>
+        </div>
+      </div>
       <div class="track-list" id="liked-list"></div>
       <div class="empty-state" id="liked-empty" style="display:none;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
@@ -565,6 +702,80 @@
     <button id="pb-repeat" title="Repeat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg></button>
     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7"/></svg>
     <div class="vol-track" id="vol-track"><div class="vol-fill" id="vol-fill"></div></div>
+  </div>
+</div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-nav" id="mobile-nav">
+  <button class="mnav-item active" data-page="home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+    Home
+  </button>
+  <button class="mnav-item" data-page="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    Search
+  </button>
+  <button class="mnav-item" data-page="liked">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
+    Liked
+  </button>
+  <button class="mnav-item" data-page="playlists">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15V6M18.5 18a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM12 21a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM21 6l-13 3v11"/></svg>
+    Crates
+  </button>
+  <button class="mnav-item" data-page="recent">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+    Recent
+  </button>
+</nav>
+
+<!-- NOW PLAYING — full-screen expanded player with lyrics -->
+<div class="np-overlay" id="np-overlay">
+  <div class="np-head">
+    <div class="np-caret"></div>
+    <button id="np-close" title="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="np-eyebrow">Now Playing</div>
+    <div class="np-tabs">
+      <button class="np-tab active" id="np-tab-player">Player</button>
+      <button class="np-tab" id="np-tab-lyrics">Lyrics</button>
+    </div>
+  </div>
+
+  <div class="np-body">
+    <div class="np-hide-when-lyrics" id="np-hide-lyrics">
+      <div class="np-art-wrap"><img id="np-art" src="" alt="" /></div>
+    </div>
+    <div class="np-meta np-hide-when-lyrics" id="np-meta-block">
+      <h2 id="np-title">Nothing playing</h2>
+      <span id="np-artist">Pick a track to start</span>
+    </div>
+
+    <div class="np-progress np-hide-when-lyrics" id="np-progress-block">
+      <span class="pb-time" id="np-cur">0:00</span>
+      <div class="bar-track" id="np-seek" style="flex:1;"><div class="bar-fill" id="np-seek-fill"></div></div>
+      <span class="pb-time right" id="np-dur">0:00</span>
+    </div>
+
+    <div class="np-controls np-hide-when-lyrics" id="np-controls-block">
+      <button id="np-prev" title="Previous"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM20 5v14l-11-7z"/></svg></button>
+      <button class="np-play" id="np-play" title="Play/Pause">
+        <svg id="np-play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <button id="np-next" title="Next"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 5h-2v14h2zM4 5v14l11-7z"/></svg></button>
+    </div>
+
+    <div class="np-secondary np-hide-when-lyrics" id="np-secondary-block">
+      <button id="np-shuffle" title="Shuffle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg></button>
+      <button class="np-like" id="np-like" title="Like"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg></button>
+      <button id="np-repeat" title="Repeat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg></button>
+    </div>
+
+    <div class="np-lyrics" id="np-lyrics">
+      <div class="np-eyebrow" style="text-align:center;margin-bottom:14px;" id="np-lyrics-heading">Lyrics</div>
+      <div id="np-lyrics-content"></div>
+    </div>
   </div>
 </div>
 
@@ -713,20 +924,31 @@ function startProgressTimer(){
     const dur = ytPlayer.getDuration() || 0;
     document.getElementById('pb-cur').textContent = fmtTime(cur);
     document.getElementById('pb-dur').textContent = fmtTime(dur);
+    document.getElementById('np-cur').textContent = fmtTime(cur);
+    document.getElementById('np-dur').textContent = fmtTime(dur);
     const pct = dur ? (cur/dur*100) : 0;
     document.getElementById('pb-seek-fill').style.width = pct + '%';
+    document.getElementById('np-seek-fill').style.width = pct + '%';
+    if('mediaSession' in navigator && 'setPositionState' in navigator.mediaSession && dur){
+      try{ navigator.mediaSession.setPositionState({ duration:dur, playbackRate:1, position:Math.min(cur,dur) }); }catch(e){}
+    }
   }, 500);
 }
 function stopProgressTimer(){ clearInterval(progressTimer); }
 
 function setPlayingUI(playing){
   state.isPlaying = playing;
-  document.getElementById('pb-play-icon').innerHTML = playing
+  const iconPath = playing
     ? '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>'
     : '<path d="M8 5v14l11-7z"/>';
+  document.getElementById('pb-play-icon').innerHTML = iconPath;
+  document.getElementById('np-play-icon').innerHTML = iconPath;
   document.getElementById('pb-vinyl').classList.toggle('spin', playing);
   document.getElementById('hero-record').classList.toggle('playing', playing);
   document.getElementById('hero-arm').classList.toggle('playing', playing);
+  if('mediaSession' in navigator){
+    navigator.mediaSession.playbackState = playing ? 'playing' : 'paused';
+  }
   renderAllVisiblePages();
 }
 
@@ -742,9 +964,17 @@ async function playTrack(id, queueList){
   document.getElementById('pb-art').src = artFor(t);
   document.getElementById('pb-like').classList.toggle('liked', state.liked.includes(id));
 
+  document.getElementById('np-title').textContent = t.title;
+  document.getElementById('np-artist').textContent = t.artist;
+  document.getElementById('np-art').src = artFor(t);
+  document.getElementById('np-like').classList.toggle('liked', state.liked.includes(id));
+  loadLyricsFor(t);
+
   // recent history
   state.recent = [id, ...state.recent.filter(x=>x!==id)].slice(0, 40);
   save(LS.recent, state.recent);
+
+  updateMediaSession(t);
 
   if(!ytReady){ await initPlayer(); await new Promise(r=>{ const iv=setInterval(()=>{ if(ytReady){clearInterval(iv); r();} },100); }); }
   ytPlayer.loadVideoById(t.id);
@@ -786,7 +1016,10 @@ function toggleLike(id){
   if(i>-1){ state.liked.splice(i,1); showToast('Removed from Liked Songs'); }
   else { state.liked.unshift(id); showToast('Added to Liked Songs'); }
   save(LS.liked, state.liked);
-  if(id === state.currentId) document.getElementById('pb-like').classList.toggle('liked', state.liked.includes(id));
+  if(id === state.currentId){
+    document.getElementById('pb-like').classList.toggle('liked', state.liked.includes(id));
+    document.getElementById('np-like').classList.toggle('liked', state.liked.includes(id));
+  }
   renderAllVisiblePages();
 }
 
@@ -874,6 +1107,57 @@ function renderList(elId, emptyId, tracks){
 function renderHome(){
   renderGrid('grid-chart', CATALOG.slice(0,10));
   renderGrid('grid-discover', CATALOG.slice(10,20));
+  renderHits();
+}
+
+/* Daily Hits — deterministic "shuffle" seeded by today's date, so the
+   lineup is stable all day and changes tomorrow. No server needed. */
+function dailySeed(){
+  const d = new Date();
+  return d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate();
+}
+function seededShuffle(arr, seed){
+  const a = [...arr];
+  let s = seed;
+  for(let i=a.length-1; i>0; i--){
+    s = (s*9301 + 49297) % 233280;
+    const j = Math.floor((s/233280) * (i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+function getDailyHits(){
+  return seededShuffle(CATALOG, dailySeed()).slice(0,6);
+}
+function renderHits(){
+  const hits = getDailyHits();
+  const el = document.getElementById('hits-strip');
+  if(!el) return;
+  el.innerHTML = hits.map((t,i)=>{
+    const current = state.currentId === t.id;
+    return `
+    <div class="hits-row" data-id="${t.id}">
+      <div class="hits-rank">${i+1}</div>
+      <div class="hits-art"><img src="${artFor(t)}" alt="" loading="lazy" /></div>
+      <div class="hits-meta">
+        <div class="t-title" style="${current?'color:var(--red-hi)':''}">${t.title}</div>
+        <div class="t-artist">${t.artist}</div>
+      </div>
+      <div class="hits-fire">${current && state.isPlaying ? '♪ Playing' : ''}</div>
+      <div class="hits-play"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></div>
+    </div>`;
+  }).join('');
+}
+
+function renderLikedHero(){
+  const tracks = state.liked.map(trackById).filter(Boolean);
+  document.getElementById('liked-count').textContent = `${tracks.length} track${tracks.length!==1?'s':''}`;
+  const cover = document.getElementById('liked-cover');
+  const covers = tracks.slice(0,4);
+  cover.classList.toggle('single', covers.length<=1);
+  cover.innerHTML = covers.length
+    ? covers.map(t=>`<img src="${artFor(t)}" alt="" />`).join('')
+    : `<div style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;color:var(--text-dimmer);"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 10-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg></div>`;
 }
 let searchSeq = 0; // guards against out-of-order async responses
 
@@ -954,6 +1238,7 @@ async function liveSearch(query){
 function renderLiked(){
   const tracks = state.liked.map(trackById).filter(Boolean);
   renderList('liked-list', 'liked-empty', tracks);
+  renderLikedHero();
 }
 function renderRecent(){
   const tracks = state.recent.map(trackById).filter(Boolean);
@@ -1006,7 +1291,7 @@ function renderAllVisiblePages(){
 ============================================================ */
 function goToPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active', n.dataset.page===name));
+  document.querySelectorAll('.nav-item, .mnav-item').forEach(n=>n.classList.toggle('active', n.dataset.page===name));
   const target = document.getElementById('page-'+name);
   if(target) target.classList.add('active');
   window.scrollTo({top:0, behavior:'smooth'});
@@ -1014,6 +1299,11 @@ function goToPage(name){
 
 document.getElementById('nav').addEventListener('click', (e)=>{
   const item = e.target.closest('.nav-item');
+  if(!item) return;
+  goToPage(item.dataset.page);
+});
+document.getElementById('mobile-nav').addEventListener('click', (e)=>{
+  const item = e.target.closest('.mnav-item');
   if(!item) return;
   goToPage(item.dataset.page);
 });
@@ -1037,6 +1327,9 @@ document.body.addEventListener('click', (e)=>{
 
   const card = e.target.closest('.track-card');
   if(card){ playTrack(card.dataset.id, CATALOG); return; }
+
+  const hitsRow = e.target.closest('.hits-row');
+  if(hitsRow){ playTrack(hitsRow.dataset.id, getDailyHits()); return; }
 
   const row = e.target.closest('.track-row');
   if(row){
@@ -1075,7 +1368,7 @@ document.getElementById('global-search').addEventListener('input', (e)=>{
 document.getElementById('pb-play').addEventListener('click', togglePlayPause);
 document.getElementById('pb-next').addEventListener('click', playNext);
 document.getElementById('pb-prev').addEventListener('click', playPrev);
-document.getElementById('pb-like').addEventListener('click', ()=>{ if(state.currentId) toggleLike(state.currentId); });
+document.getElementById('pb-like').addEventListener('click', (e)=>{ e.stopPropagation(); if(state.currentId) toggleLike(state.currentId); });
 document.getElementById('hero-play').addEventListener('click', ()=>{
   state.shuffle = false;
   playTrack(CATALOG[0].id, CATALOG);
@@ -1087,15 +1380,49 @@ document.getElementById('shuffle-all').addEventListener('click', ()=>{
   playTrack(shuffled[0].id, shuffled);
 });
 
-document.getElementById('pb-shuffle').addEventListener('click', ()=>{
-  state.shuffle = !state.shuffle;
-  document.getElementById('pb-shuffle').style.color = state.shuffle ? 'var(--red-hi)' : '';
-  showToast(state.shuffle ? 'Shuffle on' : 'Shuffle off');
+document.getElementById('liked-play-all').addEventListener('click', ()=>{
+  const tracks = state.liked.map(trackById).filter(Boolean);
+  if(tracks.length) playTrack(tracks[0].id, tracks);
 });
-document.getElementById('pb-repeat').addEventListener('click', ()=>{
+document.getElementById('liked-shuffle').addEventListener('click', ()=>{
+  const tracks = state.liked.map(trackById).filter(Boolean);
+  if(!tracks.length) return;
+  state.shuffle = true;
+  document.getElementById('pb-shuffle').style.color = 'var(--red-hi)';
+  const shuffled = [...tracks].sort(()=>Math.random()-0.5);
+  playTrack(shuffled[0].id, shuffled);
+});
+
+function toggleShuffle(){
+  state.shuffle = !state.shuffle;
+  const color = state.shuffle ? 'var(--red-hi)' : '';
+  document.getElementById('pb-shuffle').style.color = color;
+  document.getElementById('np-shuffle').style.color = color;
+  showToast(state.shuffle ? 'Shuffle on' : 'Shuffle off');
+}
+function toggleRepeat(){
   state.repeat = !state.repeat;
-  document.getElementById('pb-repeat').style.color = state.repeat ? 'var(--red-hi)' : '';
+  const color = state.repeat ? 'var(--red-hi)' : '';
+  document.getElementById('pb-repeat').style.color = color;
+  document.getElementById('np-repeat').style.color = color;
   showToast(state.repeat ? 'Repeat one on' : 'Repeat off');
+}
+document.getElementById('pb-shuffle').addEventListener('click', toggleShuffle);
+document.getElementById('pb-repeat').addEventListener('click', toggleRepeat);
+document.getElementById('np-shuffle').addEventListener('click', toggleShuffle);
+document.getElementById('np-repeat').addEventListener('click', toggleRepeat);
+document.getElementById('np-prev').addEventListener('click', playPrev);
+document.getElementById('np-next').addEventListener('click', playNext);
+document.getElementById('np-play').addEventListener('click', togglePlayPause);
+document.getElementById('np-like').addEventListener('click', ()=>{ if(state.currentId) toggleLike(state.currentId); });
+
+const npSeekTrack = document.getElementById('np-seek');
+npSeekTrack.addEventListener('click', (e)=>{
+  if(!ytPlayer || !ytPlayer.getDuration) return;
+  const rect = npSeekTrack.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  const dur = ytPlayer.getDuration() || 0;
+  ytPlayer.seekTo(dur*pct, true);
 });
 
 // Seek bar
@@ -1120,6 +1447,133 @@ volTrack.addEventListener('click', (e)=>{
   setVolUI(pct);
   if(ytPlayer && ytPlayer.setVolume) ytPlayer.setVolume(pct);
 });
+
+/* ============================================================
+   NOW PLAYING — full-screen expanded player + lyrics
+============================================================ */
+const npOverlay = document.getElementById('np-overlay');
+
+function openNowPlaying(){
+  if(!state.currentId) return;
+  npOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeNowPlaying(){
+  npOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.querySelector('.pb-track').addEventListener('click', openNowPlaying);
+document.getElementById('np-close').addEventListener('click', closeNowPlaying);
+
+// Swipe-down-to-close on touch devices
+(function(){
+  let startY = null;
+  npOverlay.addEventListener('touchstart', (e)=>{ startY = e.touches[0].clientY; }, {passive:true});
+  npOverlay.addEventListener('touchend', (e)=>{
+    if(startY===null) return;
+    const dy = e.changedTouches[0].clientY - startY;
+    if(dy > 90) closeNowPlaying();
+    startY = null;
+  }, {passive:true});
+})();
+
+function showNpTab(tab){
+  const showLyrics = tab === 'lyrics';
+  document.getElementById('np-tab-player').classList.toggle('active', !showLyrics);
+  document.getElementById('np-tab-lyrics').classList.toggle('active', showLyrics);
+  document.querySelectorAll('.np-hide-when-lyrics').forEach(el=>el.classList.toggle('hide', showLyrics));
+  document.getElementById('np-lyrics').classList.toggle('show', showLyrics);
+}
+document.getElementById('np-tab-player').addEventListener('click', ()=>showNpTab('player'));
+document.getElementById('np-tab-lyrics').addEventListener('click', ()=>showNpTab('lyrics'));
+
+/* ============================================================
+   LYRICS — fetched live from /api/lyrics (own serverless function,
+   no key needed). Best-effort: not every track has lyrics indexed.
+============================================================ */
+const lyricsCache = new Map();
+let lyricsSeq = 0;
+
+function cleanArtistForLyrics(artist){
+  return (artist||'').split(/ ft\.| feat\.| featuring| x /i)[0].trim();
+}
+
+async function loadLyricsFor(track){
+  const mySeq = ++lyricsSeq;
+  const content = document.getElementById('np-lyrics-content');
+  const heading = document.getElementById('np-lyrics-heading');
+  heading.textContent = `Lyrics — ${track.title}`;
+
+  if(lyricsCache.has(track.id)){
+    renderLyricsResult(lyricsCache.get(track.id));
+    return;
+  }
+  content.innerHTML = `<div class="np-lyrics-status">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      Looking for lyrics…
+    </div>`;
+
+  try{
+    const artist = cleanArtistForLyrics(track.artist);
+    const res = await fetch(`/api/lyrics?artist=${encodeURIComponent(artist)}&title=${encodeURIComponent(track.title)}`);
+    const data = await res.json();
+    if(mySeq !== lyricsSeq) return;
+    lyricsCache.set(track.id, data);
+    renderLyricsResult(data);
+  }catch(err){
+    if(mySeq !== lyricsSeq) return;
+    renderLyricsResult({ ok:false, reason:'network_error' });
+  }
+}
+
+function renderLyricsResult(data){
+  const content = document.getElementById('np-lyrics-content');
+  if(data && data.ok && data.lyrics){
+    content.innerHTML = `<div class="np-lyrics-body"></div><div class="np-lyrics-credit">Lyrics via lyrics.ovh · shown for personal reference</div>`;
+    content.querySelector('.np-lyrics-body').textContent = data.lyrics;
+  } else {
+    content.innerHTML = `<div class="np-lyrics-status">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        No lyrics found for this track yet.<br>Try another song, or check back later.
+      </div>`;
+  }
+}
+
+/* ============================================================
+   MEDIA SESSION — lock-screen / notification-shade controls,
+   and what lets background/locked-screen playback keep going.
+============================================================ */
+function updateMediaSession(t){
+  if(!('mediaSession' in navigator)) return;
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: t.title,
+    artist: t.artist,
+    album: 'AURA',
+    artwork: [
+      { src: artFor(t), sizes: '512x512', type: 'image/jpeg' },
+    ],
+  });
+  navigator.mediaSession.setActionHandler('play', ()=>{ ytPlayer && ytPlayer.playVideo && ytPlayer.playVideo(); });
+  navigator.mediaSession.setActionHandler('pause', ()=>{ ytPlayer && ytPlayer.pauseVideo && ytPlayer.pauseVideo(); });
+  navigator.mediaSession.setActionHandler('previoustrack', playPrev);
+  navigator.mediaSession.setActionHandler('nexttrack', playNext);
+  try{
+    navigator.mediaSession.setActionHandler('seekto', (details)=>{
+      if(ytPlayer && ytPlayer.seekTo && details.seekTime != null) ytPlayer.seekTo(details.seekTime, true);
+    });
+  }catch(e){}
+}
+
+/* ============================================================
+   SERVICE WORKER — installable app shell (Add to Home Screen),
+   helps the browser treat AURA as a real app with a proper
+   media notification instead of a background browser tab.
+============================================================ */
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  });
+}
 
 /* ============================================================
    INIT
