@@ -1580,6 +1580,46 @@ if('serviceWorker' in navigator){
 ============================================================ */
 renderAllVisiblePages();
 initPlayer();
+</script> 
+<!-- FIREBASE LOGIN SCRIPT -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCjhJlJ4PAsYsGcjrEfKYz4P4SvUDJV140",
+    authDomain: "calestial-sound.firebaseapp.com",
+    projectId: "calestial-sound",
+    storageBucket: "calestial-sound.firebasestorage.app",
+    messagingSenderId: "783637882927",
+    appId: "1:783637882927:web:b90ae15226d48c40193eda",
+    measurementId: "G-6WZYX6JTSB"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  const loginBtn = document.createElement('button');
+  loginBtn.innerText = "Login with Google";
+  loginBtn.style.cssText = "position:fixed; top:20px; right:20px; z-index:9999; padding:10px 20px; background:#DB4437; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3);";
+  
+  loginBtn.onclick = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        alert("Swagat hai, " + result.user.displayName + "! 🎉");
+        loginBtn.innerText = "Hi, " + result.user.displayName;
+        loginBtn.style.background = "#4CAF50";
+      }).catch((error) => {
+        alert("Login failed: " + error.message);
+      });
+  };
+
+  document.body.appendChild(loginBtn);
 </script>
 </body>
 </html>
+
+
+
+
