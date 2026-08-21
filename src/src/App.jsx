@@ -2,14 +2,13 @@ import React from 'react';
 import { PlayerProvider, usePlayer } from './context/PlayerContext';
 import BottomPlayerBar from './components/BottomPlayerBar';
 import NowPlayingModal from './components/NowPlayingModal';
-// Import the functions you need from the SDKs you need
+
+// Firebase imports
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"; 
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCjhJlJ4PAsYsGcjrEfKYz4P4SvUDJV140",
   authDomain: "calestial-sound.firebaseapp.com",
@@ -23,9 +22,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const auth = getAuth(app); 
+const provider = new GoogleAuthProvider(); 
 
-
-// Ek sample home component jahan se aap gaana play karke test kar soco
 function MainContent() {
   const { playSong } = usePlayer();
 
@@ -37,9 +36,27 @@ function MainContent() {
     lyrics: 'Looking at the stars above...\nFeeling the eternal rhythm of love...'
   };
 
+  // Login Function
+  const handleLogin = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        alert("Swagat hai, " + result.user.displayName + "! 🎉");
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("Login failed!");
+      });
+  };
+
   return (
     <div style={{ background: '#121212', color: '#fff', minHeight: '100vh', padding: '20px', paddingBottom: '100px' }}>
       <h1 style={{ fontSize: '24px', marginBottom: '20px' }}>Celestial Sound 🌙</h1>
+      
+      {/* Login Button */}
+      <button onClick={handleLogin} style={{ padding: '12px 24px', background: '#DB4437', color: 'white', border: 'none', borderRadius: '8px', fontSize: '16px', fontWeight: 'bold', cursor: 'pointer', marginBottom: '20px' }}>
+        Login with Google
+      </button>
+
       <p style={{ color: '#b3b3b3', marginBottom: '20px' }}>Tap the track below to test the full-screen player and lyrics:</p>
       
       <div 
