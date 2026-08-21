@@ -1,4 +1,3 @@
-
 // Vercel serverless function — the ONLY place the YouTube API key is used.
 // Deployed at: /api/youtube-search?q=<query>
 //
