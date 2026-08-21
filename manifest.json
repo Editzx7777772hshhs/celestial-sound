@@ -1,6 +1,6 @@
 {
-  "name": "AURA",
-  "short_name": "AURA",
+  "name": "Celestial",
+  "short_name": "Celestial",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0B0710",
@@ -18,5 +18,15 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
+  ],
+  "id": "com.celestial.musicplayer",
+  "description": "Vinyl-styled, YouTube-powered music player",
+  "dir": "ltr",
+  "scope": "/",
+  "lang": "en",
+  "orientation": "portrait",
+  "categories": [
+    "entertainment",
+    "music"
   ]
 }
