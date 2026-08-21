@@ -2098,6 +2098,32 @@ initPlayer();
     }
   });
 })();
+  // --- FIX: Background Playback & Notification Controls ---
+if ('mediaSession' in navigator) {
+    // Ye function notification bar ke buttons set karega
+    window.updateMediaSession = function(track) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: track.title,
+            artist: track.artist,
+            album: 'AURA',
+            artwork: [{ src: artFor(track), sizes: '512x512', type: 'image/jpeg' }]
+        });
+    };
+
+    navigator.mediaSession.setActionHandler('play', () => { if(!state.isPlaying) togglePlayPause(); });
+    navigator.mediaSession.setActionHandler('pause', () => { if(state.isPlaying) togglePlayPause(); });
+    navigator.mediaSession.setActionHandler('previoustrack', playPrev);
+    navigator.mediaSession.setActionHandler('nexttrack', playNext);
+}
+
+// Ye logic app minimize hone par music ko zinda rakhne ki koshish karega
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && state.isPlaying && ytPlayer) {
+        // App par wapas aate hi agar paused hai, toh resume karo
+        ytPlayer.playVideo();
+    }
+});
+
 </script>
 </body>
 </html>
